@@ -1,32 +1,30 @@
-#include<iostream> //C’est un fichier d’en-tête de bibliothèque standard C++ pour les flux de sortie d’entrée. Il comprend des fonctionnalités pour lire et écrire à partir du flux.
-#include<conio.h> // Conio est une bibliothèque qui permet de manipuler la console Windows
-#include<dos.h> // Cette bibliothèque a des fonctions qui sont utilisées pour gérer les interruptions, produire du son, la date et l'heure
-#include <windows.h> // contient des déclarations pour toutes les fonctions de l'API Windows, toutes les macros courantes utilisées par les programmeurs Windows et tous les types de données utilisés par les différentes fonctions et sous-systèmes.
+#include<iostream> //Câ€™est un fichier dâ€™en-tÃªte de bibliothÃ¨que standard C++ pour les flux de sortie dâ€™entrÃ©e. Il comprend des fonctionnalitÃ©s pour lire et Ã©crire Ã  partir du flux.
+#include<conio.h> // Conio est une bibliothÃ¨que qui permet de manipuler la console Windows
+#include<dos.h> // Cette bibliothÃ¨que a des fonctions qui sont utilisÃ©es pour gÃ©rer les interruptions, produire du son, la date et l'heure
+#include <windows.h> // contient des dÃ©clarations pour toutes les fonctions de l'API Windows, toutes les macros courantes utilisÃ©es par les programmeurs Windows et tous les types de donnÃ©es utilisÃ©s par les diffÃ©rentes fonctions et sous-systÃ¨mes.
 #include <time.h> //Cette librairie fournit un ensemble de fonctions permettant la manipulation de dates, de temps et d'intervals.
 
-#define SCREEN_WIDTH 90 // Largeur de de l’écran d’exécution
-#define SCREEN_HEIGHT 26 // Hauteur de l’écran d’exécution
-#define WIN_WIDTH 70    // Largeur de l’espace de déroulement du jeu
-#define MENU_WIDTH 20	// Largeur de de l’écran d’exécution
-#define GAP_SIZE 7	// Distance entre « tank » et le bas de l’espace du jeu
-#define Enemy_DIF 45    // distance entre « enemy » et « tank »
 
-
-
+#define SCREEN_WIDTH 90 // Largeur de de lâ€™Ã©cran dâ€™exÃ©cution
+#define SCREEN_HEIGHT 26 // Hauteur de lâ€™Ã©cran dâ€™exÃ©cution
+#define WIN_WIDTH 70    // Largeur de lâ€™espace de dÃ©roulement du jeu
+#define MENU_WIDTH 20	// Largeur de de lâ€™Ã©cran dâ€™exÃ©cution
+#define GAP_SIZE 7	// Distance entre Â« tank Â» et le bas de lâ€™espace du jeu
+#define Enemy_DIF 45    // distance entre Â« enemy Â» et Â« tank Â»
 
 using namespace std;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
 
 // declaration  des tableaux et des variables
-int enemyY[3]; //table qui contient la position de l’ennemi suivant l’axe Y du console
-int enemyX[3];//table qui contient la position de l’ennemi suivant l’axe X du console
+int enemyY[3]; //table qui contient la position de lâ€™ennemi suivant lâ€™axe Y du console
+int enemyX[3];//table qui contient la position de lâ€™ennemi suivant lâ€™axe X du console
 int enemyFlag[3]; //  enemyFlag[0]=1 l'existance d'un enemy d'indice 0
-char tank[3][5] = { ' ',' ','°',' ',' ',
-					'|','°','°','°','|',
-					'°','°','°','°','°' };//la forme du « tank »
+char tank[3][5] = { ' ',' ','Â°',' ',' ',
+					'|','Â°','Â°','Â°','|',
+					'Â°','Â°','Â°','Â°','Â°' };//la forme du Â« tank Â»
 
-int tankPos = WIN_WIDTH/2;//Position du « tank » (dans la milieu d’arène )
+int tankPos = WIN_WIDTH/2;//Position du Â« tank Â» (dans la milieu dâ€™arÃ¨ne )
 int score = 0;
 int bullets[20][4];// les indices des balletes
 int bulletsLife[20];// les indice des vivantes balletes
@@ -38,7 +36,7 @@ void gotoxy(int x, int y){
 	CursorPosition.Y = y;
 	SetConsoleCursorPosition(console, CursorPosition);
 }
-//defenir la taile et le visibiltée du curseur
+//defenir la taile et le visibiltÃ©e du curseur
 void setcursor(bool visible, DWORD size) {
 	if(size == 0)
 		size = 20;
@@ -49,7 +47,7 @@ void setcursor(bool visible, DWORD size) {
 	SetConsoleCursorInfo(console,&lpCursor);
 }
 
-// Définir la couleur des lignes dans la console
+// DÃ©finir la couleur des lignes dans la console
 void ChangeColor(int ColorCode )
 {
     HANDLE x= GetStdHandle(STD_OUTPUT_HANDLE);
@@ -60,20 +58,20 @@ void ChangeColor(int ColorCode )
 void drawBorder(){
 
 	for(int i=0; i<=SCREEN_WIDTH; i++){
-		gotoxy(i,SCREEN_HEIGHT); cout<<"°";
+		gotoxy(i,SCREEN_HEIGHT); cout<<"Â°";
 	}
 
 	for(int i=0; i<SCREEN_HEIGHT; i++){
-		gotoxy(0,i); cout<<"°";
-		gotoxy(SCREEN_WIDTH,i); cout<<"°";
+		gotoxy(0,i); cout<<"Â°";
+		gotoxy(SCREEN_WIDTH,i); cout<<"Â°";
 	}
 	for(int i=0; i<SCREEN_HEIGHT; i++){
-		gotoxy(WIN_WIDTH,i); cout<<"°";
+		gotoxy(WIN_WIDTH,i); cout<<"Â°";
 	}
 }
 
 
-// générer un ennemi dans l'arene
+// gÃ©nÃ©rer un ennemi dans l'arene
 void genEnemy(int ind){
 	enemyX[ind] = 3 + rand()%(WIN_WIDTH-10);
 }
@@ -82,10 +80,10 @@ void genEnemy(int ind){
 // draw la forme de l'enemy dans la console l'ennemi
 void drawEnemy(int ind){
 	if( enemyFlag[ind] == true ){
-		gotoxy(enemyX[ind], enemyY[ind]);  ChangeColor(0x79); cout<<" ** ";
+		gotoxy(enemyX[ind], enemyY[ind]);  ChangeColor(0xF9); cout<<" ** ";
 		gotoxy(enemyX[ind], enemyY[ind]+1); cout<<"****";
 		gotoxy(enemyX[ind], enemyY[ind]+2); cout<<"****";
-		gotoxy(enemyX[ind], enemyY[ind]+3); cout<<".**.";ChangeColor(0x70);
+		gotoxy(enemyX[ind], enemyY[ind]+3); cout<<".**.";ChangeColor(0xF0);
 
 	}
 }
@@ -100,14 +98,14 @@ void eraseEnemy(int ind){
 	}
 }
 
-// effacer l 'enemy par l'appel de « ereace enemy() » et généré un autre
+// effacer l 'enemy par l'appel de Â« ereace enemy() Â» et gÃ©nÃ©rÃ© un autre
 void resetEnemy(int ind){
 	eraseEnemy(ind);
 	enemyY[ind] = 4;
 	genEnemy(ind);
 }
 
-//générer une balle pour tirer sur l’ennemi
+//gÃ©nÃ©rer une balle pour tirer sur lâ€™ennemi
 void genBullet(){
 	bullets[bIndex][0] = 22;
 	bullets[bIndex][1] = tankPos;
@@ -118,7 +116,7 @@ void genBullet(){
 		bIndex = 0;
 }
 
-//déplacer la balle bers le haut dans le console
+//dÃ©placer la balle bers le haut dans le console
 void moveBullet(){
 	for(int i=0; i<20; i++){
 		if( bullets[i][0] > 2 )
@@ -137,8 +135,8 @@ void moveBullet(){
 void drawBullets(){
 	for(int i=0; i<20; i++){
 		if( bullets[i][0] > 1){
-			gotoxy(bullets[i][1],bullets[i][0]); ChangeColor(0x74); cout<<"°";
-			gotoxy(bullets[i][3],bullets[i][2]); ChangeColor(0x74);cout<<"°";ChangeColor(0x70);
+			gotoxy(bullets[i][1],bullets[i][0]); ChangeColor(0xF4); cout<<".";
+			gotoxy(bullets[i][3],bullets[i][2]); ChangeColor(0xF4);cout<<".";ChangeColor(0xF0);
 		}
 	}
 }
@@ -149,7 +147,7 @@ void eraseBullet(int i){
 	gotoxy(bullets[i][3],bullets[i][2]); cout<<" ";
 }
 
-// effacer les bullets  l'lorsqu’elles arrive au fin du largeur de espace de jeux
+// effacer les bullets  l'lorsquâ€™elles arrive au fin du largeur de espace de jeux
 void eraseBullets(){
 	for(int i=0; i<20; i++){
 		if( bullets[i][0] >= 1 ){
@@ -160,18 +158,18 @@ void eraseBullets(){
 
 
 
-// dessiner la « tank »
+// dessiner la Â« tank Â»
 void drawtank(){
-    ChangeColor(0x7D);
+    ChangeColor(0xFD);
 	for(int i=0; i<3; i++){
 		for(int j=0; j<5; j++){
 			gotoxy(j+tankPos, i+22);cout<<tank[i][j];
 		}
 	}
-	ChangeColor(0x70);
+	ChangeColor(0xF0);
 }
 
-// effacer la « tank »
+// effacer la Â« tank Â»
 void erasetank(){
 	for(int i=0; i<3; i++){
 		for(int j=0; j<5; j++){
@@ -180,7 +178,7 @@ void erasetank(){
 	}
 }
 
-// verifiez si le char est touché par l’ennemi
+// verifiez si le char est touchÃ© par lâ€™ennemi
 int collision(){
 	if( enemyY[0]+4 >= 23 ){
 		if( enemyX[0] + 4 - tankPos >= 0 && enemyX[0] + 4 - tankPos < 8  ){
@@ -191,7 +189,7 @@ int collision(){
 }
 
 
-// vérifier si l'ennemie num (0 ou 1) est abattu (autrement dit si la ballettes touche l'ennemi)
+// vÃ©rifier si l'ennemie num (0 ou 1) est abattu (autrement dit si la ballettes touche l'ennemi)
 int bulletHit(){
 
 	for(int i=0; i<20; i++){
@@ -232,39 +230,39 @@ void gameover(){
 
 	cout<<endl;
 	gotoxy(49,8);cout<<"__________________________";
-	gotoxy(49,9);cout<<"-------- Game Over -------";ChangeColor(0x70);
+	gotoxy(49,9);cout<<"-------- Game Over -------";ChangeColor(0xF0);
 	gotoxy(49,10);cout<<"__________________________";
-	gotoxy(45,16);ChangeColor(0x75);cout<<"Press any key to go back to menu.";ChangeColor(0x70);
+	gotoxy(45,16);ChangeColor(0xF5);cout<<"Press any key to go back to menu.";ChangeColor(0xF0);
 	getch();
 }
 
-// montrer notre score mis à jour lorsque l’ennemi a tiré
+// montrer notre score mis Ã  jour lorsque lâ€™ennemi a tirÃ©
 void updateScore(){
-	gotoxy(WIN_WIDTH + 7, 5);ChangeColor(0x74);cout<<"Score: "<<score<<endl;ChangeColor(0x70);
+	gotoxy(WIN_WIDTH + 7, 5);ChangeColor(0xF4);cout<<"Score: "<<score<<endl;ChangeColor(0xF0);
 }
 
 //  afficher le blocks des instruction de notre jeux
 void instructions(){
 
 	system("cls");
-	gotoxy(49,8);ChangeColor(0x71);cout<<"Instructions";
-	gotoxy(47,10);ChangeColor(0x70);cout<<"----------------";
-	gotoxy(39,12);ChangeColor(0x7C);cout<<"Press 'spacebar' to make tank fly";
-	gotoxy(39,14);ChangeColor(0x7A);cout<<"Press 'A' to move the tank lef ";
-	gotoxy(39,16);ChangeColor(0x75);cout<<"Press 'Z' to make tank right";
-	gotoxy(39,18);ChangeColor(0x7C);cout<<"Press 'echap' to quit the game ";
-	gotoxy(27,21);ChangeColor(0x70);cout<<"Press any key to sort from the instruction and  go back to menu";ChangeColor(0x70);
+	gotoxy(49,8);ChangeColor(0xF1);cout<<"Instructions";
+	gotoxy(47,10);ChangeColor(0xF0);cout<<"----------------";
+	gotoxy(39,12);ChangeColor(0xFC);cout<<"Press 'spacebar' to make tank fly";
+	gotoxy(39,14);ChangeColor(0xFA);cout<<"Press 'A' to move the tank lef ";
+	gotoxy(39,16);ChangeColor(0xF5);cout<<"Press 'Z' to make tank right";
+	gotoxy(39,18);ChangeColor(0xFC);cout<<"Press 'echap' to quit the game ";
+	gotoxy(27,21);ChangeColor(0xF0);cout<<"Press any key to sort from the instruction and  go back to menu";ChangeColor(0xF0);
 	getch();
 }
 
 void about()
 {
     system("cls");
-    gotoxy(49,9);ChangeColor(0x71);cout<<"    About this game   ";
-    gotoxy(49,10);ChangeColor(0x70);cout<<"_____________________";
-	gotoxy(39,12);ChangeColor(0x75);cout<<"this game is developped by MALEK bejaoui as";
-	gotoxy(39,13);ChangeColor(0x75);cout<<"a part of project framed by Mss MOUNA .";
-	gotoxy(39,14);ChangeColor(0x75);cout<<"ENET'COM.";ChangeColor(0x70);
+    gotoxy(49,9);ChangeColor(0xF1);cout<<"    About this game   ";
+    gotoxy(49,10);ChangeColor(0xF0);cout<<"_____________________";
+	gotoxy(39,12);ChangeColor(0xF5);cout<<"this game is developped by MALEK bejaoui as";
+	gotoxy(39,13);ChangeColor(0xF5);cout<<"a part of project framed by Mss MOUNA .";
+	gotoxy(39,14);ChangeColor(0xF5);cout<<"ENET'COM.";ChangeColor(0xF0);
 	getch();
 }
 /************************************************************************************/
@@ -292,7 +290,7 @@ void play()
 	gotoxy(WIN_WIDTH + 5, 2);cout<<"Free Fire Game ";
 	gotoxy(WIN_WIDTH + 6, 4);cout<<"----------";
 	gotoxy(WIN_WIDTH + 6, 6);cout<<"----------";
-	gotoxy(WIN_WIDTH + 4, 12);ChangeColor(0x7A);cout<<"Control Option ";ChangeColor(0x70);
+	gotoxy(WIN_WIDTH + 4, 12);ChangeColor(0xFA);cout<<"Control Option ";ChangeColor(0xF0);
 	gotoxy(WIN_WIDTH + 7, 13);cout<<"-------- ";
 	gotoxy(WIN_WIDTH + 2, 14);cout<<"   'A'  - Left";
 	gotoxy(WIN_WIDTH + 2, 15);cout<<"   'Z'  - Right";
@@ -304,10 +302,10 @@ void play()
     int S=200;
 	while(1){
 
-        // La fonctionnalité kbhit () correspond essentiellement à la frappe au clavier. Cette fonction traite de l'appui sur le clavier
+        // La fonctionnalitÃ© kbhit () correspond essentiellement Ã  la frappe au clavier. Cette fonction traite de l'appui sur le clavier
 		if(kbhit()){
 
-        // détecter le bouton enfoncé pour (déplacer ou tirer) z pour se déplacer vers la droite et A pour se déplacer vers la gauche barre d'espace pour tirer et echap pour quitter
+        // dÃ©tecter le bouton enfoncÃ© pour (dÃ©placer ou tirer) z pour se dÃ©placer vers la droite et A pour se dÃ©placer vers la gauche barre d'espace pour tirer et echap pour quitter
 			char ch = getch();
 			if( ch=='a' || ch=='A' ){
 				if( tankPos > 2 )
@@ -372,7 +370,7 @@ void play()
 
 int main()
 {
-    ChangeColor(0x70);
+    ChangeColor(0xF0);
 	setcursor(0,0);
 	srand( (unsigned)time(NULL));
 
@@ -380,19 +378,19 @@ int main()
 	do{
 		system("cls");
 
-		ChangeColor(0x79);
+		ChangeColor(0xF9);
 		gotoxy(42,6); cout<<" __________________________";
 		gotoxy(42,7); cout<<"|       Mini Projet       |";
 		gotoxy(42,8); cout<<"|     Free Fire Game      |";
 		gotoxy(42,9); cout<<" __________________________";
 
-		gotoxy(50,12);ChangeColor(0x72);cout<<"1. Start Game";
-		gotoxy(50,14); ChangeColor(0x71); cout<<"2. Instructions";
-		gotoxy(50,16); ChangeColor(0x75);cout<<"3. About";
-		gotoxy(50,18); ChangeColor(0x74);cout<<"4. Quit";
-        gotoxy(10,25);  ChangeColor(0x72); cout<<"Press 'S' to START game |";ChangeColor(0x71);cout<< "Press 'I' to see the INSTRUCTIONS";ChangeColor(0x74);cout<<"| Press 'Q' to QUIT the game";
-        gotoxy(35,26); ChangeColor(0x75);cout<<"Press 'O' the see some informations about this game";
-		gotoxy(40,27); ChangeColor(0x70);cout<<"this game is devoloped by Malek Bejaoui\n";ChangeColor(0x70);
+		gotoxy(50,12);ChangeColor(0xF2);cout<<"1. Start Game";
+		gotoxy(50,14); ChangeColor(0xF1); cout<<"2. Instructions";
+		gotoxy(50,16); ChangeColor(0xF5);cout<<"3. About";
+		gotoxy(50,18); ChangeColor(0xF4);cout<<"4. Quit";
+        gotoxy(10,25);  ChangeColor(0xF2); cout<<"Press 'S' to START game |";ChangeColor(0xF1);cout<< "Press 'I' to see the INSTRUCTIONS";ChangeColor(0xF4);cout<<"| Press 'Q' to QUIT the game";
+        gotoxy(35,26); ChangeColor(0xF5);cout<<"Press 'O' the see some informations about this game";
+		gotoxy(40,27); ChangeColor(0xF0);cout<<"this game is devoloped by Malek Bejaoui\n";ChangeColor(0xF0);
 		char op = getche();
 
 		if( op=='S' || op=='s') play();
